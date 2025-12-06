@@ -1,5 +1,7 @@
-export default function handler(req, res) {
-  const numbers = req.body.numbers;
+export default async function handler(req, res) {
+  const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
+
+  const numbers = body.numbers;
 
   if (!Array.isArray(numbers)) {
     return res.status(400).json({ error: "enter 'numbers' array" });
@@ -7,5 +9,5 @@ export default function handler(req, res) {
 
   const sorted = numbers.sort((a, b) => b - a);
 
-  res.status(200).json({ sorted });
+  return res.status(200).json({ sorted });
 }
